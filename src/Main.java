@@ -17,9 +17,10 @@ public class Main {
 
                     break;
                 case 2:
-                    o.getFullList();
+                    o.add_remove_camera();
                     break;
                 case 3:
+                    o.getFullList();
                     break;
                 case 4:
                     break;
