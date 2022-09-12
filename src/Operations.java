@@ -19,10 +19,11 @@ public class Operations {
     }
 
     public void add_remove_camera() {
+        Scanner sc = new Scanner(System.in);
         do {
             System.out.println("1. Add\n2. Remove\n3. Go to previous menu");
-            Scanner sc = new Scanner(System.in);
-            switch (sc.nextInt()) {
+            int choice = sc.nextInt();
+            switch (choice) {
                 case 1:
                     addCamera();
                     break;
@@ -32,7 +33,7 @@ public class Operations {
                 case 3:
                     return;
             }
-            sc.close();
+//            sc.close();
         } while (true);
     }
 
