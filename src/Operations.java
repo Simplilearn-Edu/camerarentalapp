@@ -31,10 +31,24 @@ public class Operations {
                     removeCamera();
                     break;
                 case 3:
+                    myListing();
+                    break;
+                case 4:
                     return;
             }
-//            sc.close();
         } while (true);
+    }
+
+    private void myListing() {
+        if (myList.size() > 0) {
+            for (Camera c : myList) {
+                System.out.println(c.getBrand());
+                System.out.println(c.getModel());
+                System.out.println(c.getPrice_per_day());
+            }
+        } else {
+            System.out.println("No Data Present At This Moment.");
+        }
     }
 
     private void addCamera() {
@@ -49,9 +63,13 @@ public class Operations {
         Camera camera = new Camera(brand, model, per_day_price);
         myList.add(camera);
         fullList.add(camera);
-        sc.close();
     }
 
     private void removeCamera() {
+        Scanner sc = new Scanner(System.in);
+        System.out.print("Enter the Camera Name to delete - ");
+        sc.nextLine();
+
+        
     }
 }

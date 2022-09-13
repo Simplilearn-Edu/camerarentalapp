@@ -7,17 +7,16 @@ public class Main {
         Operations o = new Operations();
         int ch;
         do {
-            System.out.println("1. Rent A Camera");
-            System.out.println("2. Add / Remove Camera");
+            System.out.println("1. Add / Remove Camera");
+            System.out.println("2. Rent A Camera");
             System.out.println("3. Rent A Camera");
             System.out.println("4. My Wallet");
             System.out.println("5. Exit");
             switch (sc.nextInt()) {
                 case 1:
-
+                    o.add_remove_camera();
                     break;
                 case 2:
-                    o.add_remove_camera();
                     break;
                 case 3:
                     o.getFullList();
