@@ -65,7 +65,7 @@ public class Operations {
         System.out.print("Enter the Per Day Price - ");
         int per_day_price = sc.nextInt();
 
-        Camera camera = new Camera(myList.size() + 101, brand, model, per_day_price);
+        Camera camera = new Camera(fullList.size() + 101, brand, model, per_day_price);
         myList.add(camera);
         fullList.add(camera);
     }
@@ -74,7 +74,5 @@ public class Operations {
         Scanner sc = new Scanner(System.in);
         System.out.print("Enter the Camera Name to delete - ");
         sc.nextLine();
-
-
     }
 }
