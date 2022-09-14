@@ -1,3 +1,5 @@
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -28,27 +30,44 @@ public class Operations {
     }
 
     public void getFullList() {
+        File cameraFile = new File("src/camera.txt");
+        Scanner file_reader = null;
+        try {
+            file_reader = new Scanner(cameraFile);
+            while (file_reader.hasNextLine()) {
+                String row[] = file_reader.nextLine().split(",");
+                fullList.add(new Camera(
+                        Integer.parseInt(row[0]),
+                        row[1],
+                        row[2],
+                        Integer.parseInt(row[3]),
+                        row[4].charAt(0)));
+            }
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        }
         if (fullList.size() > 0) {
             for (Camera c : fullList) {
-                System.out.println("Camera ID           - "+c.getId());
-                System.out.println("Brand               - "+c.getBrand());
-                System.out.println("Model               - "+c.getModel());
-                System.out.println("Price(Per Day) INR. - "+c.getPrice_per_day());
-                System.out.println("Status              - "+c.getStatus());
+                System.out.println("Camera ID           - " + c.getId());
+                System.out.println("Brand               - " + c.getBrand());
+                System.out.println("Model               - " + c.getModel());
+                System.out.println("Price(Per Day) INR. - " + c.getPrice_per_day());
+                System.out.println("Status              - " + c.getStatus());
                 System.out.println("================================================================");
             }
         } else {
             System.out.println("No Data Present At This Moment.");
         }
     }
+
     private void myListing() {
         if (myList.size() > 0) {
             for (Camera c : myList) {
-                System.out.println("Camera ID           - "+c.getId());
-                System.out.println("Brand               - "+c.getBrand());
-                System.out.println("Model               - "+c.getModel());
-                System.out.println("Price(Per Day) INR. - "+c.getPrice_per_day());
-                System.out.println("Status              - "+c.getStatus());
+                System.out.println("Camera ID           - " + c.getId());
+                System.out.println("Brand               - " + c.getBrand());
+                System.out.println("Model               - " + c.getModel());
+                System.out.println("Price(Per Day) INR. - " + c.getPrice_per_day());
+                System.out.println("Status              - " + c.getStatus());
                 System.out.println("================================================================");
             }
         } else {

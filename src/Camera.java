@@ -16,6 +16,14 @@ public class Camera {
         this.status = 'a';
     }
 
+    public Camera(int id, String brand, String model, int price_per_day, char status) {
+        this.id = id;
+        this.brand = brand;
+        this.model = model;
+        this.price_per_day = price_per_day;
+        this.status = status;
+    }
+
     public int getId() {
         return id;
     }
