@@ -7,4 +7,4 @@
 107,Samsung,pqr,500,a
 108,LG,pqr,500,a
 109,Canon,pqr,500,a
-110,Chroma,pqr,500,a111,Samsung,s123,2354,a
+110,Chroma,pqr,500,a

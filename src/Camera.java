@@ -66,6 +66,6 @@ public class Camera {
 
     @Override
     public String toString() {
-        return id + "," + brand + "," + model + "," + price_per_day + "," + status + "\n";
+        return id + "," + brand + "," + model + "," + price_per_day + "," + status;
     }
 }

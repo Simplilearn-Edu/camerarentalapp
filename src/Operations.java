@@ -1,7 +1,4 @@
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -105,12 +102,25 @@ public class Operations {
         File allcameras = new File("src/camera.txt");
         File mycameras = new File("src/mycamera.txt");
         try {
-            FileWriter fw1 = new FileWriter(allcameras,true);
-            FileWriter fw2 = new FileWriter(mycameras,true);
-            fw1.write(camera.toString());
-            fw2.write(camera.toString());
+            FileWriter fw1 = new FileWriter(allcameras, true);
+            FileWriter fw2 = new FileWriter(mycameras, true);
+            if (fullList.size() > 1 && myList.size() > 1) {
+                fw1.write(camera.toString());
+                fw2.write(camera.toString());
+            } else {
+                fw1.write(camera.toString() + System.lineSeparator());
+                fw2.write(camera.toString() + System.lineSeparator());
+            }
             fw1.close();
             fw2.close();
+            /*BufferedWriter bw1 = new BufferedWriter(fw1);
+            BufferedWriter bw2 = new BufferedWriter(fw2);
+            PrintWriter pw1 = new PrintWriter(bw1);
+            PrintWriter pw2 = new PrintWriter(bw2);
+            pw1.println(camera.toString());
+            pw2.println(camera.toString());
+            pw1.close();
+            pw2.close();*/
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
