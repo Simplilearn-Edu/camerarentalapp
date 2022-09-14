@@ -66,11 +66,6 @@ public class Camera {
 
     @Override
     public String toString() {
-        return "Camera{" +
-                "brand='" + brand + '\'' +
-                ", model='" + model + '\'' +
-                ", price_per_day=" + price_per_day +
-                ", status=" + status +
-                '}';
+        return id + "," + brand + "," + model + "," + price_per_day + "," + status + "\n";
     }
 }
