@@ -8,3 +8,4 @@
 108,LG,pqr,500,a
 109,Canon,pqr,500,a
 110,Chroma,pqr,500,a
+Camera{brand='samsung', model='s12', price_per_day=1234, status=a}

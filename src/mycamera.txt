@@ -1,0 +1,1 @@
+Camera{brand='samsung', model='s12', price_per_day=1234, status=a}

@@ -93,19 +93,28 @@ public class Operations {
         System.out.print("Enter the Per Day Price - ");
         int per_day_price = sc.nextInt();
 
+        fullList = getCameraList("src/camera.txt");
+        myList = getCameraList("src/mycamera.txt");
+        int id = 0;
+        if (fullList.size() > 0)
+            id = fullList.get(fullList.size() - 1).getId();
+        Camera camera = new Camera(id + 1, brand, model, per_day_price);
+        myList.add(camera);
+        fullList.add(camera);
+
         File allcameras = new File("src/camera.txt");
         File mycameras = new File("src/mycamera.txt");
         try {
-            FileWriter fw1 = new FileWriter(allcameras);
-            FileWriter fw2 = new FileWriter(mycameras);
-
+            FileWriter fw1 = new FileWriter(allcameras,true);
+            FileWriter fw2 = new FileWriter(mycameras,true);
+            fw1.write(camera.toString());
+            fw2.write(camera.toString());
+            fw1.close();
+            fw2.close();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
 
-        Camera camera = new Camera(fullList.size() + 101, brand, model, per_day_price);
-        myList.add(camera);
-        fullList.add(camera);
     }
 
     private void removeCamera() {
