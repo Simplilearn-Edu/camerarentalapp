@@ -1,5 +1,7 @@
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -29,23 +31,29 @@ public class Operations {
         } while (true);
     }
 
-    public void getFullList() {
-        File cameraFile = new File("src/camera.txt");
+    private List<Camera> getCameraList(String filename) {
+        File cameraFile = new File(filename);
+        List<Camera> cameras = new ArrayList<>();
         Scanner file_reader = null;
         try {
             file_reader = new Scanner(cameraFile);
             while (file_reader.hasNextLine()) {
                 String row[] = file_reader.nextLine().split(",");
-                fullList.add(new Camera(
+                cameras.add(new Camera(
                         Integer.parseInt(row[0]),
                         row[1],
                         row[2],
                         Integer.parseInt(row[3]),
                         row[4].charAt(0)));
             }
+            return cameras;
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public void getFullList() {
+        fullList = getCameraList("src/camera.txt");
         if (fullList.size() > 0) {
             for (Camera c : fullList) {
                 System.out.println("Camera ID           - " + c.getId());
@@ -61,6 +69,7 @@ public class Operations {
     }
 
     private void myListing() {
+        myList = getCameraList("src/mycamera.txt");
         if (myList.size() > 0) {
             for (Camera c : myList) {
                 System.out.println("Camera ID           - " + c.getId());
@@ -83,6 +92,16 @@ public class Operations {
         String model = sc.nextLine();
         System.out.print("Enter the Per Day Price - ");
         int per_day_price = sc.nextInt();
+
+        File allcameras = new File("src/camera.txt");
+        File mycameras = new File("src/mycamera.txt");
+        try {
+            FileWriter fw1 = new FileWriter(allcameras);
+            FileWriter fw2 = new FileWriter(mycameras);
+
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
 
         Camera camera = new Camera(fullList.size() + 101, brand, model, per_day_price);
         myList.add(camera);
