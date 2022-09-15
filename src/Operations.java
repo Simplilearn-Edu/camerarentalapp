@@ -104,23 +104,21 @@ public class Operations {
         try {
             FileWriter fw1 = new FileWriter(allcameras, true);
             FileWriter fw2 = new FileWriter(mycameras, true);
-            if (fullList.size() > 1 && myList.size() > 1) {
+            if ((fullList.size() > 1) && (myList.size() > 1)) {
+                fw1.write(System.lineSeparator() + camera.toString());
+                fw2.write(System.lineSeparator() + camera.toString());
+            } else if ((fullList.size() > 1) && (myList.size() == 1)) {
+                fw1.write(System.lineSeparator() + camera.toString());
+                fw2.write(camera.toString());
+            } else if ((fullList.size() == 1) && (myList.size() > 1)) {
+                fw1.write(camera.toString());
+                fw2.write(System.lineSeparator() + camera.toString());
+            } else {
                 fw1.write(camera.toString());
                 fw2.write(camera.toString());
-            } else {
-                fw1.write(camera.toString() + System.lineSeparator());
-                fw2.write(camera.toString() + System.lineSeparator());
             }
             fw1.close();
             fw2.close();
-            /*BufferedWriter bw1 = new BufferedWriter(fw1);
-            BufferedWriter bw2 = new BufferedWriter(fw2);
-            PrintWriter pw1 = new PrintWriter(bw1);
-            PrintWriter pw2 = new PrintWriter(bw2);
-            pw1.println(camera.toString());
-            pw2.println(camera.toString());
-            pw1.close();
-            pw2.close();*/
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -129,7 +127,25 @@ public class Operations {
 
     private void removeCamera() {
         Scanner sc = new Scanner(System.in);
-        System.out.print("Enter the Camera Name to delete - ");
-        sc.nextLine();
+        fullList = getCameraList("src/camera.txt");
+        myList = getCameraList("src/mycamera.txt");
+        if (myList.size() > 0) {
+            for (Camera c : myList) {
+                System.out.println("Camera ID           - " + c.getId());
+                System.out.println("Brand               - " + c.getBrand());
+                System.out.println("Model               - " + c.getModel());
+                System.out.println("Price(Per Day) INR. - " + c.getPrice_per_day());
+                System.out.println("Status              - " + c.getStatus());
+                System.out.println("================================================================");
+            }
+            System.out.print("Enter the Camera ID to delete - ");
+            int camera_id = sc.nextInt();
+
+        } else {
+            System.out.println("No Camera Found In Your List.");
+        }
+
     }
 }
+
+
