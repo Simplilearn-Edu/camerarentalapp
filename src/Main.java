@@ -9,7 +9,7 @@ public class Main {
         do {
             System.out.println("1. Add / Remove Camera");
             System.out.println("2. Rent A Camera");
-            System.out.println("3. Rent A Camera");
+            System.out.println("3. View All Cameras");
             System.out.println("4. My Wallet");
             System.out.println("5. Exit");
             switch (sc.nextInt()) {
@@ -17,6 +17,7 @@ public class Main {
                     o.add_remove_camera();
                     break;
                 case 2:
+
                     break;
                 case 3:
                     o.getFullList();

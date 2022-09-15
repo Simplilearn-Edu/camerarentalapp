@@ -126,25 +126,56 @@ public class Operations {
     }
 
     private void removeCamera() {
-        Scanner sc = new Scanner(System.in);
-        fullList = getCameraList("src/camera.txt");
-        myList = getCameraList("src/mycamera.txt");
-        if (myList.size() > 0) {
-            for (Camera c : myList) {
-                System.out.println("Camera ID           - " + c.getId());
-                System.out.println("Brand               - " + c.getBrand());
-                System.out.println("Model               - " + c.getModel());
-                System.out.println("Price(Per Day) INR. - " + c.getPrice_per_day());
-                System.out.println("Status              - " + c.getStatus());
-                System.out.println("================================================================");
+        try {
+            Scanner sc = new Scanner(System.in);
+            fullList = getCameraList("src/camera.txt");
+            myList = getCameraList("src/mycamera.txt");
+            if (myList.size() > 0) {
+                for (Camera c : myList) {
+                    System.out.println("Camera ID           - " + c.getId());
+                    System.out.println("Brand               - " + c.getBrand());
+                    System.out.println("Model               - " + c.getModel());
+                    System.out.println("Price(Per Day) INR. - " + c.getPrice_per_day());
+                    System.out.println("Status              - " + c.getStatus());
+                    System.out.println("================================================================");
+                }
+                System.out.print("Enter the Camera ID to delete - ");
+                int camera_id = sc.nextInt();
+                if(myList.removeIf(n -> (n.getId() == camera_id))){
+                    fullList.removeIf(n -> (n.getId() == camera_id));
+
+                    File allcameras = new File("src/camera.txt");
+                    File mycameras = new File("src/mycamera.txt");
+                    FileWriter fw1 = new FileWriter(allcameras);
+                    FileWriter fw2 = new FileWriter(mycameras);
+
+                    String my_cameras = "";
+                    String all_cameras = "";
+
+                    for (Camera c : myList) {
+                        my_cameras += (c.toString() + System.lineSeparator());
+                    }
+                    fw2.write(my_cameras);
+                    for (Camera c : fullList) {
+                        all_cameras += (c.toString() + System.lineSeparator());
+
+                    }
+                    fw1.write(all_cameras);
+
+                    fw1.close();
+                    fw2.close();
+                    System.out.println("Camera successfully removed from the list.");
+                }else {
+                    System.out.println("Incorrect Camera ID.");
+                }
+            } else {
+                System.out.println("No Camera Found In Your List.");
             }
-            System.out.print("Enter the Camera ID to delete - ");
-            int camera_id = sc.nextInt();
-
-        } else {
-            System.out.println("No Camera Found In Your List.");
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
         }
-
     }
 }
 
