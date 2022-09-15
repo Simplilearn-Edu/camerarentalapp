@@ -141,7 +141,7 @@ public class Operations {
                 }
                 System.out.print("Enter the Camera ID to delete - ");
                 int camera_id = sc.nextInt();
-                if(myList.removeIf(n -> (n.getId() == camera_id))){
+                if (myList.removeIf(n -> (n.getId() == camera_id))) {
                     fullList.removeIf(n -> (n.getId() == camera_id));
 
                     File allcameras = new File("src/camera.txt");
@@ -165,7 +165,7 @@ public class Operations {
                     fw1.close();
                     fw2.close();
                     System.out.println("Camera successfully removed from the list.");
-                }else {
+                } else {
                     System.out.println("Incorrect Camera ID.");
                 }
             } else {
@@ -175,6 +175,44 @@ public class Operations {
             System.out.println(e.getMessage());
         } catch (Exception e) {
             System.out.println(e.getMessage());
+        }
+    }
+
+    public void myWallet() {
+        try {
+            Scanner sc = new Scanner(System.in);
+            File file = new File("src/wallet.txt");
+            Scanner reader = new Scanner(file);
+
+            int wallet_balence = 0;
+            if (reader.hasNext()) {
+                wallet_balence = Integer.parseInt(reader.next());
+            }
+            reader.close();
+            System.out.println("Your Current Wallet Balance is - INR." + wallet_balence);
+            System.out.print("Do you want to add more amount to your wallet?(1.Yes 2.No) - ");
+            switch (sc.nextInt()) {
+                case 1:
+                    System.out.print("Enter the amount - ");
+                    int amount = sc.nextInt();
+                    if (amount > 0) {
+                        wallet_balence += amount;
+                        FileWriter fw = new FileWriter(file);
+                        fw.write(wallet_balence+"");
+                        fw.close();
+                        System.out.println("Your wallet balance updated successfully. Current Wallet Balance - INR."+wallet_balence);
+                    } else {
+                        System.out.println("Invalid Amount - " + amount);
+                    }
+                case 2:
+                    return;
+                default:
+                    System.out.println("Invalid Operation");
+            }
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+        } catch (Exception e) {
+            e.getMessage();
         }
     }
 }

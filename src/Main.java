@@ -23,15 +23,16 @@ public class Main {
                     o.getFullList();
                     break;
                 case 4:
+                    o.myWallet();
                     break;
                 case 5:
-                    break;
+                    System.out.println("Thanks Visit again");
+                    return;
                 default:
                     System.out.println("Invalid Choice");
             }
-            System.out.println("Press 1 to continue");
-            ch = sc.nextInt();
-        } while (ch == 1);
-
+//            System.out.println("Press 1 to continue");
+//            ch = sc.nextInt();
+        } while (true);
     }
 }
