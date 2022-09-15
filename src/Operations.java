@@ -184,23 +184,23 @@ public class Operations {
             File file = new File("src/wallet.txt");
             Scanner reader = new Scanner(file);
 
-            int wallet_balence = 0;
+            int wallet_balance = 0;
             if (reader.hasNext()) {
-                wallet_balence = Integer.parseInt(reader.next());
+                wallet_balance = Integer.parseInt(reader.next());
             }
             reader.close();
-            System.out.println("Your Current Wallet Balance is - INR." + wallet_balence);
+            System.out.println("Your Current Wallet Balance is - INR." + wallet_balance);
             System.out.print("Do you want to add more amount to your wallet?(1.Yes 2.No) - ");
             switch (sc.nextInt()) {
                 case 1:
                     System.out.print("Enter the amount - ");
                     int amount = sc.nextInt();
                     if (amount > 0) {
-                        wallet_balence += amount;
+                        wallet_balance += amount;
                         FileWriter fw = new FileWriter(file);
-                        fw.write(wallet_balence+"");
+                        fw.write(wallet_balance+"");
                         fw.close();
-                        System.out.println("Your wallet balance updated successfully. Current Wallet Balance - INR."+wallet_balence);
+                        System.out.println("Your wallet balance updated successfully. Current Wallet Balance - INR."+wallet_balance);
                     } else {
                         System.out.println("Invalid Amount - " + amount);
                     }
