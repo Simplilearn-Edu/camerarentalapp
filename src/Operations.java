@@ -198,9 +198,9 @@ public class Operations {
                     if (amount > 0) {
                         wallet_balance += amount;
                         FileWriter fw = new FileWriter(file);
-                        fw.write(wallet_balance+"");
+                        fw.write(wallet_balance + "");
                         fw.close();
-                        System.out.println("Your wallet balance updated successfully. Current Wallet Balance - INR."+wallet_balance);
+                        System.out.println("Your wallet balance updated successfully. Current Wallet Balance - INR." + wallet_balance);
                     } else {
                         System.out.println("Invalid Amount - " + amount);
                     }
@@ -214,6 +214,30 @@ public class Operations {
         } catch (Exception e) {
             e.getMessage();
         }
+    }
+
+    public boolean login() {
+        boolean status = false;
+        try {
+            Scanner sc = new Scanner(System.in);
+            System.out.print("USERNAME - ");
+            String username = sc.next();
+            System.out.print("PASSWORD - ");
+            String password = sc.next();
+            File file = new File("src/credentials.txt");
+            Scanner reader = new Scanner(file);
+            if (reader.hasNext()) {
+                String[] credentials = reader.nextLine().split(",");
+                if (credentials[0].equals(username) && credentials[1].equals(password)) {
+                    status = true;
+                }
+            }
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return status;
     }
 }
 
