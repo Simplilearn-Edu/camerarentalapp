@@ -4,8 +4,12 @@ import java.util.List;
 import java.util.Scanner;
 
 public class Operations {
-    private List<Camera> fullList = new ArrayList<>();
-    private List<Camera> myList = new ArrayList<>();
+    private static final String WALLET = "src/wallet.txt";
+    private static final String CREDENTIAL = "src/credentials.txt";
+    private static final String MY_CAMERA = "src/mycamera.txt";
+    private static final String ALL_CAMERAS = "src/camera.txt";
+//    private List<Camera> fullList = new ArrayList<>();
+//    private List<Camera> myList = new ArrayList<>();
 
     public void add_remove_camera() {
         Scanner sc = new Scanner(System.in);
@@ -49,36 +53,43 @@ public class Operations {
         }
     }
 
-    public void getFullList() {
-        fullList = getCameraList("src/camera.txt");
-        if (fullList.size() > 0) {
-            for (Camera c : fullList) {
-                System.out.println("Camera ID           - " + c.getId());
-                System.out.println("Brand               - " + c.getBrand());
-                System.out.println("Model               - " + c.getModel());
-                System.out.println("Price(Per Day) INR. - " + c.getPrice_per_day());
-                System.out.println("Status              - " + c.getStatus());
-                System.out.println("================================================================");
+    public void displayCameraList(List<Camera> cameraList) {
+        if (cameraList.size() > 0) {
+            System.out.println("===========================================================================");
+            System.out.printf("%5s %10s %12s %20s %12s", "CAMERA ID", "BRAND", "MODEL", "PRICE(PER DAY)", "STATUS");
+            System.out.println();
+            System.out.println("===========================================================================");
+            for (Camera c : cameraList) {
+                System.out.format("%5s %14s %11s %12s %22s", c.getId(), c.getBrand(), c.getModel(), c.getPrice_per_day(), c.getStatus() == 'a' ? "Available" : "Rented");
+                System.out.println();
             }
+            System.out.println("===========================================================================");
         } else {
             System.out.println("No Data Present At This Moment.");
         }
     }
 
+    public void getFullList() {
+//        fullList = getCameraList(ALL_CAMERAS);
+        displayCameraList(getCameraList(ALL_CAMERAS));
+    }
+
     private void myListing() {
-        myList = getCameraList("src/mycamera.txt");
+        displayCameraList(getCameraList(MY_CAMERA));
+        /*myList = getCameraList(MY_CAMERA);
         if (myList.size() > 0) {
+            System.out.println("===========================================================================");
+            System.out.printf("%5s %10s %12s %20s %12s", "CAMERA ID", "BRAND", "MODEL", "PRICE(PER DAY)", "STATUS");
+            System.out.println();
+            System.out.println("===========================================================================");
             for (Camera c : myList) {
-                System.out.println("Camera ID           - " + c.getId());
-                System.out.println("Brand               - " + c.getBrand());
-                System.out.println("Model               - " + c.getModel());
-                System.out.println("Price(Per Day) INR. - " + c.getPrice_per_day());
-                System.out.println("Status              - " + c.getStatus());
-                System.out.println("================================================================");
+                System.out.format("%5s %14s %11s %12s %22s", c.getId(), c.getBrand(), c.getModel(), c.getPrice_per_day(), c.getStatus() == 'a' ? "Available" : "Rented");
+                System.out.println();
             }
+            System.out.println("===========================================================================");
         } else {
             System.out.println("No Data Present At This Moment.");
-        }
+        }*/
     }
 
     private void addCamera() {
@@ -90,8 +101,8 @@ public class Operations {
         System.out.print("Enter the Per Day Price - ");
         int per_day_price = sc.nextInt();
 
-        fullList = getCameraList("src/camera.txt");
-        myList = getCameraList("src/mycamera.txt");
+        List<Camera> fullList = getCameraList(ALL_CAMERAS);
+        List<Camera> myList = getCameraList(MY_CAMERA);
         int id = 0;
         if (fullList.size() > 0)
             id = fullList.get(fullList.size() - 1).getId();
@@ -99,11 +110,11 @@ public class Operations {
         myList.add(camera);
         fullList.add(camera);
 
-        File allcameras = new File("src/camera.txt");
-        File mycameras = new File("src/mycamera.txt");
+        File all_cameras = new File(ALL_CAMERAS);
+        File my_cameras = new File(MY_CAMERA);
         try {
-            FileWriter fw1 = new FileWriter(allcameras, true);
-            FileWriter fw2 = new FileWriter(mycameras, true);
+            FileWriter fw1 = new FileWriter(all_cameras, true);
+            FileWriter fw2 = new FileWriter(my_cameras, true);
             if ((fullList.size() > 1) && (myList.size() > 1)) {
                 fw1.write(System.lineSeparator() + camera.toString());
                 fw2.write(System.lineSeparator() + camera.toString());
@@ -122,14 +133,13 @@ public class Operations {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-
     }
 
     private void removeCamera() {
         try {
             Scanner sc = new Scanner(System.in);
-            fullList = getCameraList("src/camera.txt");
-            myList = getCameraList("src/mycamera.txt");
+            List<Camera> fullList = getCameraList(ALL_CAMERAS);
+            List<Camera> myList = getCameraList(MY_CAMERA);
             if (myList.size() > 0) {
                 for (Camera c : myList) {
                     System.out.println("Camera ID           - " + c.getId());
@@ -144,8 +154,8 @@ public class Operations {
                 if (myList.removeIf(n -> (n.getId() == camera_id))) {
                     fullList.removeIf(n -> (n.getId() == camera_id));
 
-                    File allcameras = new File("src/camera.txt");
-                    File mycameras = new File("src/mycamera.txt");
+                    File allcameras = new File(ALL_CAMERAS);
+                    File mycameras = new File(MY_CAMERA);
                     FileWriter fw1 = new FileWriter(allcameras);
                     FileWriter fw2 = new FileWriter(mycameras);
 
@@ -178,17 +188,26 @@ public class Operations {
         }
     }
 
-    public void myWallet() {
+    public int getWalletBalance() {
+        int wallet_balance = 0;
         try {
-            Scanner sc = new Scanner(System.in);
-            File file = new File("src/wallet.txt");
+            File file = new File(WALLET);
             Scanner reader = new Scanner(file);
 
-            int wallet_balance = 0;
             if (reader.hasNext()) {
                 wallet_balance = Integer.parseInt(reader.next());
             }
             reader.close();
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+        }
+        return wallet_balance;
+    }
+
+    public void myWallet() {
+        try {
+            Scanner sc = new Scanner(System.in);
+            int wallet_balance = getWalletBalance();
             System.out.println("Your Current Wallet Balance is - INR." + wallet_balance);
             System.out.print("Do you want to add more amount to your wallet?(1.Yes 2.No) - ");
             switch (sc.nextInt()) {
@@ -197,7 +216,7 @@ public class Operations {
                     int amount = sc.nextInt();
                     if (amount > 0) {
                         wallet_balance += amount;
-                        FileWriter fw = new FileWriter(file);
+                        FileWriter fw = new FileWriter(WALLET);
                         fw.write(wallet_balance + "");
                         fw.close();
                         System.out.println("Your wallet balance updated successfully. Current Wallet Balance - INR." + wallet_balance);
@@ -224,7 +243,7 @@ public class Operations {
             String username = sc.next();
             System.out.print("PASSWORD - ");
             String password = sc.next();
-            File file = new File("src/credentials.txt");
+            File file = new File(CREDENTIAL);
             Scanner reader = new Scanner(file);
             if (reader.hasNext()) {
                 String[] credentials = reader.nextLine().split(",");
@@ -238,6 +257,43 @@ public class Operations {
             System.out.println(e.getMessage());
         }
         return status;
+    }
+
+    public void rent() {
+        Scanner sc = new Scanner(System.in);
+        int balance = getWalletBalance();
+        List<Camera> availableList = getCameraList(ALL_CAMERAS);
+        availableList.removeIf(n -> (n.getStatus() == 'r'));
+        if (availableList.size() > 0) {
+            System.out.println("FOLLOWING IS THE LIST OF AVAILABLE CAMERA(S) - ");
+            displayCameraList(availableList);
+            System.out.println("ENTER THE CAMERA ID YOU WANT TO RENT - ");
+            int camera_id = sc.nextInt();
+            String brand = "";
+            String model = "";
+            int price_per_day = 0;
+            boolean flag = false;
+            for (Camera c : availableList) {
+                if (c.getId() == camera_id) {
+                    flag = true;
+                    brand = c.getBrand();
+                    model = c.getModel();
+                    price_per_day = c.getPrice_per_day();
+                    break;
+                }
+            }
+            if (flag){
+                if(balance>price_per_day){
+                    System.out.println("YOUR TRANSACTION FOR CAMERA - "+brand+" "+model+" with rent INR."+price_per_day+" HAS SUCCESSFULLY COMPLETED.");
+                }else {
+                    System.out.println("TRANSACTION FAILED DUE TO INSUFFICIENT WALLET BALANCE. PLEASE DEPOSIT THE AMOUNT TO YOUR WALLET.");
+                }
+            }else{
+                System.out.println("INVALID ID");
+            }
+        } else {
+            System.out.println("CURRENTLY NO CAMERA(S) AVAILABLE FOR RENT.");
+        }
     }
 }
 

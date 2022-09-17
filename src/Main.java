@@ -18,7 +18,7 @@ public class Main {
                         o.add_remove_camera();
                         break;
                     case 2:
-
+                        o.rent();
                         break;
                     case 3:
                         o.getFullList();
@@ -27,7 +27,7 @@ public class Main {
                         o.myWallet();
                         break;
                     case 5:
-                        System.out.println("Thanks Visit again");
+                        System.out.println("THANKS VISIT AGAIN.");
                         return;
                     default:
                         System.out.println("Invalid Choice");
