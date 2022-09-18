@@ -8,12 +8,6 @@
 8,LG,pqr,500,a
 9,Canon,pqr,500,a
 10,Chroma,pqr,500,a
+11,Something,some,200,r
+12,Some,Another,100,a
 13,Canon,Digital,123,a
-14,asdf,dsf,123,a
-15,Nikon,asdf,123,a
-16,aedf,dsf,12,a
-17,Canon,Digicam,1200,a
-18,Nikon,S123,123,a
-19,Sdf,df,23,a
-20,sdf,fdf,23,a
-21,dfs,df,123,a
