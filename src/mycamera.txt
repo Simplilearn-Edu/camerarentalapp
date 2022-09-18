@@ -1,2 +1,5 @@
 11,Something,some,200,r
 12,Some,Another,100,a
+14,NIKON,DSLR-D7500,500,a
+
+15,Sony,DSLR12,200,a
