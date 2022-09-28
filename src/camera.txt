@@ -1,15 +1,1 @@
-1,Samsung,DS123,500,a
-2,Sony,HD214,500,a
-3,Panasonic,XC,500,a
-4,Canon,XLR,500,a
-5,Fujitsu,J5,500,a
-6,Sony,HD226,500,a
-7,Samsung,DS246,500,a
-8,LG,L123,500,a
-9,Canon,XPL,500,a
-10,Chroma,CT,500,a
-11,Something,some,200,r
-12,Some,Another,100,r
-13,Canon,Digital,123,a
-14,NIKON,DSLR-D7500,500,a
-15,Sony,DSLR12,200,a
+1:Samsung:DS123:500.0:a,2:Sony:HD214:500.0:a,3:Panasonic:XC:500.0:a,4:Canon:XLR:500.0:a,5:Fujitsu:J5:500.0:a,6:Sony:HD226:500.0:a,7:Samsung:DS246:500.0:a,8:LG:L123:500.0:a,9:Canon:XPL:500.0:a,10:Chroma:CT:500.0:a,11:Something:some:200.0:r,12:Some:Another:100.0:r,13:Canon:Digital:123.0:a,14:NIKON:DSLR-D7500:500.0:a,15:Sony:DSLR12:200.0:a,17:Samsung:SM123:200.0:r,18:SONY:SO123:300.25:a,19:SONY:SONY1234:123.0:a,

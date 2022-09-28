@@ -9,13 +9,23 @@ public class Operations {
     private static final String MY_CAMERAS = "src/mycamera.txt";
     private static final String ALL_CAMERAS = "src/camera.txt";
 
+    private Validator v = new Validator();
 
     public void add_remove_camera() {
         Scanner sc = new Scanner(System.in);
         do {
-            System.out.println("1. ADD\n2. REMOVE\n3. MY CAMERAS\n4. GO TO PREVIOUS MENU");
-            int choice = sc.nextInt();
-            switch (choice) {
+            String choice = "";
+            boolean choice_validation;
+
+            do {
+                System.out.println("1. ADD\n2. REMOVE\n3. MY CAMERAS\n4. GO TO PREVIOUS MENU");
+                choice = sc.next();
+                choice_validation = Validator.isValidChoice(choice);
+                if (!choice_validation)
+                    System.out.println("ERROR : INVALID CHOICE.");
+            } while (!choice_validation);
+
+            switch (Integer.parseInt(choice)) {
                 case 1:
                     addCamera();
                     break;
@@ -37,14 +47,17 @@ public class Operations {
         Scanner file_reader;
         try {
             file_reader = new Scanner(cameraFile);
-            while (file_reader.hasNextLine()) {
-                String[] row = file_reader.nextLine().split(",");
-                cameras.add(new Camera(
-                        Integer.parseInt(row[0]),
-                        row[1],
-                        row[2],
-                        Integer.parseInt(row[3]),
-                        row[4].charAt(0)));
+            while (file_reader.hasNext()) {
+                String[] lines = file_reader.next().split(",");
+                for (int i = 0; i < lines.length; i++) {
+                    String[] content = lines[i].split(":");
+                    cameras.add(new Camera(
+                            Integer.parseInt(content[0]),
+                            content[1],
+                            content[2],
+                            Double.parseDouble(content[3]),
+                            content[4].charAt(0)));
+                }
             }
         } catch (FileNotFoundException e) {
             System.out.println("ERROR : " + e.getMessage());
@@ -84,15 +97,19 @@ public class Operations {
         String brand = sc.nextLine();
         System.out.print("ENTER THE MODEL - ");
         String model = sc.nextLine();
-        System.out.print("ENTER THE PER DAY PRICE (INR) - ");
-        int per_day_price = sc.nextInt();
+        String per_day_price;
+
+        do {
+            System.out.print("ENTER THE PER DAY PRICE (INR) - ");
+            per_day_price = sc.next();
+        } while (!v.isValidPrice(per_day_price));
 
         List<Camera> fullList = getCameraList(ALL_CAMERAS);
         List<Camera> myList = getCameraList(MY_CAMERAS);
         int id = 0;
         if (fullList.size() > 0)
             id = fullList.get(fullList.size() - 1).getId();
-        Camera camera = new Camera(id + 1, brand, model, per_day_price);
+        Camera camera = new Camera(id + 1, brand, model, Double.parseDouble(per_day_price));
         myList.add(camera);
         fullList.add(camera);
 
@@ -101,19 +118,8 @@ public class Operations {
         try {
             FileWriter fw1 = new FileWriter(all_cameras, true);
             FileWriter fw2 = new FileWriter(my_cameras, true);
-            if ((fullList.size() > 1) && (myList.size() > 1)) {
-                fw1.write(System.lineSeparator() + camera.toString());
-                fw2.write(System.lineSeparator() + camera.toString());
-            } else if ((fullList.size() > 1) && (myList.size() == 1)) {
-                fw1.write(System.lineSeparator() + camera.toString());
-                fw2.write(camera.toString());
-            } else if ((fullList.size() == 1) && (myList.size() > 1)) {
-                fw1.write(camera.toString());
-                fw2.write(System.lineSeparator() + camera.toString());
-            } else {
-                fw1.write(camera.toString());
-                fw2.write(camera.toString());
-            }
+            fw1.write(camera.toString());
+            fw2.write(camera.toString());
             fw1.close();
             fw2.close();
             System.out.println("YOUR CAMERA HAS BEEN SUCCESSFULLY ADDED TO THE LIST.");
@@ -134,7 +140,6 @@ public class Operations {
                 if (isOnRent(myList, camera_id)) {
                     System.out.println("ERROR : THIS CAMERA CANNOT BE REMOVED AS IT IS GIVEN ON RENT.");
                 } else {
-
                     if (myList.removeIf(n -> (n.getId() == camera_id))) {
                         fullList.removeIf(n -> (n.getId() == camera_id));
 
@@ -143,18 +148,12 @@ public class Operations {
                         FileWriter fw1 = new FileWriter(allcameras);
                         FileWriter fw2 = new FileWriter(mycameras);
 
-                        String my_cameras = "";
-                        String all_cameras = "";
-
                         for (Camera c : myList) {
-                            my_cameras += (c.toString() + System.lineSeparator());
+                            fw2.write(c.toString());
                         }
-                        fw2.write(my_cameras);
                         for (Camera c : fullList) {
-                            all_cameras += (c.toString() + System.lineSeparator());
-
+                            fw1.write(c.toString());
                         }
-                        fw1.write(all_cameras);
 
                         fw1.close();
                         fw2.close();
@@ -184,14 +183,14 @@ public class Operations {
         return rent_status;
     }
 
-    public int getWalletBalance() {
-        int wallet_balance = 0;
+    public double getWalletBalance() {
+        double wallet_balance = 0;
         try {
             File file = new File(WALLET);
             Scanner reader = new Scanner(file);
 
             if (reader.hasNext()) {
-                wallet_balance = Integer.parseInt(reader.next());
+                wallet_balance = Double.parseDouble(reader.next());
             }
             reader.close();
         } catch (IOException e) {
@@ -203,13 +202,13 @@ public class Operations {
     public void myWallet() {
         try {
             Scanner sc = new Scanner(System.in);
-            int wallet_balance = getWalletBalance();
+            double wallet_balance = getWalletBalance();
             System.out.println("YOUR CURRENT WALLET BALANCE IS - INR." + wallet_balance);
             System.out.print("DO YOU WANT TO DEPOSIT MORE AMOUNT TO YOUR WALLET?(1.YES 2.NO) - ");
             switch (sc.nextInt()) {
                 case 1:
                     System.out.print("ENTER THE AMOUNT (INR) - ");
-                    int amount = sc.nextInt();
+                    double amount = sc.nextDouble();
                     if (amount > 0) {
                         wallet_balance += amount;
                         FileWriter fw = new FileWriter(WALLET);
@@ -258,7 +257,7 @@ public class Operations {
     public void rent() {
         try {
             Scanner sc = new Scanner(System.in);
-            int balance = getWalletBalance();
+            double balance = getWalletBalance();
             List<Camera> availableList = getCameraList(ALL_CAMERAS);
             List<Camera> fullList = getCameraList(ALL_CAMERAS);
 
@@ -271,7 +270,7 @@ public class Operations {
 
                 String brand = "";
                 String model = "";
-                int price_per_day = 0;
+                double price_per_day = 0;
                 int full_list_index = -1;
                 boolean flag = false;
 
@@ -297,7 +296,7 @@ public class Operations {
 
                         fullList.get(full_list_index).setStatus('r');
                         for (Camera c : fullList) {
-                            f1.write(c.toString() + System.lineSeparator());
+                            f1.write(c.toString());
                         }
                         f1.close();
 

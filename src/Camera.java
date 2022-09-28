@@ -2,13 +2,10 @@ public class Camera {
     private int id;
     private String brand;
     private String model;
-    private int price_per_day;
+    private double price_per_day;
     private char status;
 
-    public Camera() {
-    }
-
-    public Camera(int id, String brand, String model, int price_per_day) {
+    public Camera(int id, String brand, String model, double price_per_day) {
         this.id = id;
         this.brand = brand;
         this.model = model;
@@ -16,7 +13,7 @@ public class Camera {
         this.status = 'a';
     }
 
-    public Camera(int id, String brand, String model, int price_per_day, char status) {
+    public Camera(int id, String brand, String model, double price_per_day, char status) {
         this.id = id;
         this.brand = brand;
         this.model = model;
@@ -48,11 +45,11 @@ public class Camera {
         this.model = model;
     }
 
-    public int getPrice_per_day() {
+    public double getPrice_per_day() {
         return price_per_day;
     }
 
-    public void setPrice_per_day(int price_per_day) {
+    public void setPrice_per_day(double price_per_day) {
         this.price_per_day = price_per_day;
     }
 
@@ -66,6 +63,6 @@ public class Camera {
 
     @Override
     public String toString() {
-        return id + "," + brand + "," + model + "," + price_per_day + "," + status;
+        return id + ":" + brand + ":" + model + ":" + price_per_day + ":" + status + ",";
     }
 }
