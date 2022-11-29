@@ -17,7 +17,7 @@ public class Main {
                 String choice = "";
                 boolean choice_validation;
                 do {
-                    System.out.println("1. ADD / REMOVE CAMERA");
+                    System.out.println("1. MY CAMERA");
                     System.out.println("2. RENT A CAMERA");
                     System.out.println("3. VIEW ALL CAMERAS");
                     System.out.println("4. MY WALLET");

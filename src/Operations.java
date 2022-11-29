@@ -18,7 +18,7 @@ public class Operations {
             boolean choice_validation;
 
             do {
-                System.out.println("1. ADD\n2. REMOVE\n3. MY CAMERAS\n4. GO TO PREVIOUS MENU");
+                System.out.println("1. ADD\n2. REMOVE\n3. VIEW MY CAMERAS\n4. GO TO PREVIOUS MENU");
                 choice = sc.next();
                 choice_validation = Validator.isValidChoice(choice);
                 if (!choice_validation)
